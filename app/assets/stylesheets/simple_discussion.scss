@@ -62,7 +62,7 @@
 .simple_discussion .solved-tag {
   font-weight: 500;
   i {
-    color: $brand-color;
+    color: $thread-solved-color;
     margin-right: 3px;
     font-size: 1.4rem;
   }
@@ -72,7 +72,7 @@
 .simple_discussion .unsolved-tag {
   font-weight: 500;
   i {
-    color: $thread-opened-color;
+    color: $thread-unsolved-color;
     margin-right: 3px;
     font-size: 1.4rem;
   }
