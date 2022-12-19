@@ -74,6 +74,34 @@ This will take the user to the views inside the Rails engine and that's all you 
 
 ### Customizing All The Things!
 
+If you'd like to customize the color schemas , then you can follow these  steps
+- Create an scss file [simple_discussion_override_color.scss] and add the following code to it
+```scss
+// Colors of the button is depend on this brand-color
+$brand-color: #4ddb9b; 
+// Color for icon and text of `Closed` / `solved` tag
+$thread-solved-color: #4ddb9b; 
+// Color for icon and text of `Opened` / `Unsolved` tag
+$thread-unsolved-color: #f29d38; 
+// Button background color for primary buttons
+$button-background-color: #fff;
+// Shadown color when hovering over the buttons
+$button-hover-shadow-color: rgba(77, 219, 155, .5); 
+$link-active-color: #000;
+$link-inactive-color: #555;
+// Color for thread filter buttons on hover
+$forum-thread-filter-btn-link-hover-background: #f3f4f6 !default;
+```
+- Add the scss file to application.scss.
+  > Note : Make sure that the file is imported before the simple_discussion.scss file
+```scss
+...
+@import 'simple_discussion_override_color.scss';
+@import 'simple_discussion';
+...
+```
+- Now, you can customize the colors, as per your need
+
 If you'd like to customize the views that SimpleDiscussion uses, you can install the views to your Rails app:
 
 ```bash
