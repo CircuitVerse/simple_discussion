@@ -87,7 +87,9 @@ $thread-unsolved-color: #f29d38;
 $button-background-color: #fff;
 // Shadown color when hovering over the buttons
 $button-hover-shadow-color: rgba(77, 219, 155, .5); 
+// active links color
 $link-active-color: #000;
+// inactive links color
 $link-inactive-color: #555;
 // Color for thread filter buttons on hover
 $forum-thread-filter-btn-link-hover-background: #f3f4f6;
