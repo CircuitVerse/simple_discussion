@@ -90,7 +90,7 @@ $button-hover-shadow-color: rgba(77, 219, 155, .5);
 $link-active-color: #000;
 $link-inactive-color: #555;
 // Color for thread filter buttons on hover
-$forum-thread-filter-btn-link-hover-background: #f3f4f6 !default;
+$forum-thread-filter-btn-link-hover-background: #f3f4f6;
 ```
 - Add the scss file to application.scss.
   > Note : Make sure that the file is imported before the simple_discussion.scss file
