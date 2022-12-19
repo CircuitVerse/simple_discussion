@@ -2,7 +2,7 @@
   <div class="col-md-2 mb-3">
 
     <div class="col">
-      <%= link_to t('ask_a_question'), simple_discussion.new_forum_thread_path, class: "btn green-btn btn-block mb-4" %>
+      <%= link_to t('ask_a_question'), simple_discussion.new_forum_thread_path, class: "btn forum-primary-btn btn-block mb-4" %>
 
       <div class="forum-thread-filters">
         <%= forum_link_to simple_discussion.forum_threads_path, exact: true do %>
@@ -44,7 +44,7 @@
       <% if @forum_thread.present? && @forum_thread.persisted? %>
         <div class="mt-3">
           <%# User has not posted in the thread or subscribed %>
-          <%= link_to simple_discussion.forum_thread_notifications_path(@forum_thread), method: :post, class: "btn green-outline-btn btn-block" do %>
+          <%= link_to simple_discussion.forum_thread_notifications_path(@forum_thread), method: :post, class: "btn forum-primary-outline-btnbtn-block" do %>
             <% if @forum_thread.subscribed? current_user %>
               <%= icon "fa-fw fas", "bell-slash" %> <%= t('.unsubscribe') %>
             <% else %>
