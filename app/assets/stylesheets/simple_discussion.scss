@@ -3,92 +3,29 @@
 @import "simple_discussion_colors";
 @import "simple_discussion_variables";
 
-/* Allow pagination to be centered */
-.forum-threads-nav nav {
-  display: inline-block;
-}
-
-/* Highlight the active navigation item in the sidebar */
-.forum-thread-filters {
-  a {
-    color: #555;
-  }
-
-  .active {
-    color: #222;
-    font-weight: bolder;
-  }
-}
-
-/* Formatting for the forum threads */
-.forum-thread {
-  margin-bottom: -20px;
-
-  h4 {
-    margin-bottom: 4px;
-
-    a {
-      color: #222;
-      font-size: 16px;
-      font-weight: normal;
-      line-height: 1.1;
-    }
-  }
-}
-
-.forum-thread-filters a {
-  color: #555555;
-  display: block;
+// Primary button for Forum
+.simple_discussion .forum-primary-btn {
+  background-color: $brand-color;
+  border-color: $brand-color;
+  border-radius: $button-border-radius;
+  color: $button-background-color;
 
   &:hover {
-    color: #222222;
-    font-weight: bold;
-    text-decoration: none
+    // border shadow with blur
+    box-shadow: 0 0 0 0.2rem $button-hover-shadow-color;
   }
 }
 
-.thread-details {
-  color: #999;
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-/* Display the forum post count above the "posts" text on the index page */
-.thread-posts-count {
-  color: #222;
-  text-align: center;
-
-  span, small {
-    display: block;
-  }
-
-  .count {
-    font-size: 1.5em;
-    font-weight: 300;
-    line-height: 1em;
-  }
+// Outlined Button for Forum
+.simple_discussion .forum-primary-outline-btn {
+  background-color: $button-background-color;
+  border-color: $brand-color;
+  border-radius: $button-border-radius;
+  color: $brand-color;
 
   &:hover {
-    color: #222;
-    text-decoration: none;
-  }
-}
-
-/* Formatting for the forum posts themselves */
-.forum-post {
-  position: relative;
-
-  /* When the URL anchor matches a post id, highlight that item */
-  &:target {
-    background-color: rgb(248, 238, 199);
-  }
-
-  /* Fill this out if you want to highlight the OPs posts */
-  // &.original-poster {
-  // }
-
-  &.solved {
-    border: 2px solid #5cb85c;
+    // border shadow with blur
+    box-shadow: 0 0 0 0.2rem $button-hover-shadow-color;
   }
 }
 
@@ -105,203 +42,186 @@
   font-size: 13px;
 }
 
+// Forum Category Selecion Dropdown
+.simple_discussion .custom-select {
+  border-radius: $button-border-radius;
+}
 
-.simple_discussion {
-  margin: 0 auto;
-  width: 95%;
+// Thread Category Inline Chips Design
+.simple_discussion .category-chip {
+  height: fit-content;
+  padding: 2px 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 20px;
+  border-width: 0.1px;
+  border-style: solid;
+}
 
-  // Primary button for Simple Discussion Forum
-  // Background Color filled
-  .forum-primary-btn {
-    background-color: $brand-color;
-    border-color: $brand-color;
-    border-radius: $button-border-radius;
-    color: $button-background-color;
-
-    &:hover {
-      // border shadow with blur
-      box-shadow: 0 0 0 .2rem $button-hover-shadow-color;
-    }
-  }
-
-  // Outline button for Simple Discussion Forum
-  .forum-primary-outline-btn{
-    background-color: $button-background-color;
-    border-color: $brand-color;
-    border-radius: $button-border-radius;
+// Solved tag for threads
+.simple_discussion .solved-tag {
+  font-weight: 500;
+  i {
     color: $brand-color;
+    margin-right: 3px;
+    font-size: 1.4rem;
+  }
+}
+
+// Unsolved / Unanswered tag for threads
+.simple_discussion .unsolved-tag {
+  font-weight: 500;
+  i {
+    color: $thread-opened-color;
+    margin-right: 3px;
+    font-size: 1.4rem;
+  }
+}
+
+/* Allow pagination to be centered */
+.forum-threads-nav nav {
+  display: inline-block;
+}
+
+// Forum Thread Filter - In Desktop, Left Sidebar
+.simple_discussion .forum-thread-filters {
+  // Button
+  .btn-link {
+    border-radius: $button-border-radius;
+    color: $link-inactive-color;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 10px 12px;
+
+    i {
+      margin-right: 14px;
+    }
 
     &:hover {
-      // border shadow with blur
-      box-shadow: 0 0 0 .2rem $button-hover-shadow-color;
-    }
-  }
-
-  .forum-thread-filters {
-    // Div inside the forum thread filters link
-    .btn-link {
-      border-radius: $button-border-radius;
-      color: $link-inactive-color;
-      cursor: pointer;
-      font-weight: 500;
-      padding: 10px 12px;
-
-      i {
-        margin-right: 14px;
-      }
-    }
-
-    .btn-link:hover {
       background-color: $forum-thread-filter-btn-link-hover-background;
       color: $link-active-color;
       font-weight: 500;
       text-decoration: none;
     }
-
-    // Main links
-    a {
-      margin-bottom: 5px;
-      text-decoration: none;
-
-      .active .btn-link {
-        background-color: $forum-thread-filter-btn-link-hover-background;
-        color: $link-active-color;
-      }
-    }
   }
 
-  .custom-select {
-    border-radius: $button-border-radius;
-  }
+  // Text
+  a {
+    margin-bottom: 5px;
+    text-decoration: none;
 
-  .forum-thread {
-    .avatar {
-      border-radius: 50%;
+    &.active {
+      color: #222;
+      font-weight: bolder;
     }
 
-    .thread-container {
-      text-decoration: none;
-      width: 100%;
-    }
-
-    .thread-header-title {
-      color: #171a1e;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 1.025px;
-      text-decoration: none;
-    }
-
-    .thread-header-icons {
-      font-weight: 500;
-      i {
-        margin-right: 5px;
-        font-size: 1.2rem;
-      }
-
-      .chat-icon i {
-        color: #D3DFE2;
-      }
-      .solved-tag i {
-        color: $brand-color;
-      }
-      .unsolved-tag i {
-        color: $thread-opened-color;
-      }
-    }
-
-    .thread-content{
-      text-align: justify;
-      color: $link-inactive-color;
-      font-weight: 400;
-    }
-
-    .thread-author{
-      font-weight: 600;
-      color: $link-inactive-color;
-      span{
-        color: #1d1d1d;
-      }
+    &.active .btn-link {
+      background-color: $forum-thread-filter-btn-link-hover-background;
+      color: $link-active-color;
     }
   }
+}
 
-  .category-chip{
-    height: fit-content;
-    padding: 2px 15px;
-    font-size: 0.9rem;
-    // background-color: #F3F4F6;
-    font-weight: 600;
-    border-radius: 20px;
-    border-width: 0.1px;
-    border-style: solid;
+// Formatting for the forum threads
+.simple_discussion .forum-thread {
+  // Avatar of user
+  .avatar {
+    border-radius: 50%;
   }
 
-  .solved-tag{
+  // Container of a thread that wraps all component
+  .thread-container {
+    text-decoration: none;
+    width: 100%;
+  }
+
+  // Thread Title
+  .thread-header-title {
+    color: #171a1e;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.025px;
+    text-decoration: none;
+  }
+
+  // Icons inlined to thread title
+  .thread-header-icons {
     font-weight: 500;
-    i{
-      color: $brand-color;
-      margin-right: 3px;
-      font-size: 1.4rem;
+    i {
+      margin-right: 5px;
+      font-size: 1.2rem;
+    }
+
+    .chat-icon i {
+      color: #d3dfe2;
     }
   }
 
-
-  .unsolved-tag{
-    font-weight: 500;
-    i{
-      color: $thread-opened-color;
-      margin-right: 3px;
-      font-size: 1.4rem;
-    }
-  }
-
-  .thread-details-custom{
-    font-weight: 500;
+  // Thread content
+  .thread-content {
+    text-align: justify;
     color: $link-inactive-color;
-    span{
-      font-weight: 600;
+    font-weight: 400;
+  }
+
+  // Thread Author Details line
+  .thread-author {
+    font-weight: 600;
+    color: $link-inactive-color;
+    span {
       color: #1d1d1d;
     }
   }
+}
 
-  .forum-post{
-    padding: 10px;
-    border-radius: $post-body-border-radius;
+// Formatting thread details section [name, date, category]
+.simple_discussion .thread-details-custom {
+  font-weight: 500;
+  color: $link-inactive-color;
+  span {
+    font-weight: 600;
+    color: #1d1d1d;
+  }
+}
 
-    &:hover{
-      background-color: #F4F3F3;
+// Formatting forum post
+.simple_discussion .forum-post {
+  padding: 10px;
+  border-radius: $post-body-border-radius;
+
+  &:hover {
+    background-color: #f4f3f3;
+  }
+}
+
+// Formatting the listtile for user details
+.simple_discussion .forum-post .forum-post-header,
+.form-user-details {
+  p {
+    padding: 0;
+    margin: 0;
+  }
+  .user-details {
+    .user-avatar {
+      border-radius: $avatar-image-border-radius;
+      width: fit-content;
+      height: fit-content;
+      overflow: hidden;
+      img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+    }
+    .details {
+      font-weight: 600;
+      .title {
+        color: $link-active-color;
+      }
+      .subtitle {
+        color: $link-inactive-color;
+        font-size: 0.9rem;
+      }
     }
   }
-
-  .forum-post .forum-post-header, .form-user-details{
-    p{
-      padding: 0;
-      margin: 0;
-    }
-    .user-details{
-      .user-avatar{
-        border-radius: $avatar-image-border-radius;
-        width: fit-content;
-        height: fit-content;
-        overflow: hidden;
-        img{
-          width: 40px;
-          height: 40px;
-          object-fit: cover;
-        }
-      }
-      .details{
-        font-weight: 600; 
-        .title{
-          color: $link-active-color;
-        }
-        .subtitle{
-         color: $link-inactive-color;
-         font-size: 0.9rem;
-        }
-      }
-    }
-
-  }
-
 }

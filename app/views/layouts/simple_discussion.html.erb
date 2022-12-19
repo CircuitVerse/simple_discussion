@@ -44,7 +44,7 @@
       <% if @forum_thread.present? && @forum_thread.persisted? %>
         <div class="mt-3">
           <%# User has not posted in the thread or subscribed %>
-          <%= link_to simple_discussion.forum_thread_notifications_path(@forum_thread), method: :post, class: "btn forum-primary-outline-btnbtn-block" do %>
+          <%= link_to simple_discussion.forum_thread_notifications_path(@forum_thread), method: :post, class: "btn forum-primary-outline-btn btn-block" do %>
             <% if @forum_thread.subscribed? current_user %>
               <%= icon "fa-fw fas", "bell-slash" %> <%= t('.unsubscribe') %>
             <% else %>
