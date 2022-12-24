@@ -1,6 +1,6 @@
 <%= cache forum_thread do %>
   <div class="forum-thread d-flex flex-row mb-4">
-    <div class="mx-4 d-none d-md-block">
+    <div class="mr-3 d-none d-md-block">
       <img class="avatar" src="<%= gravatar_url_for(forum_thread.user.email,size: 30) %>" alt="user avatar">
     </div>
     <div class="thread-container">
@@ -33,7 +33,7 @@
       </div>
 
       <div class="thread-author d-flex flex-row  align-items-center">
-        <p class="p-0 m-0 mr-3">Created By <span><%= forum_thread.user.name %></span> • <span><%= time_ago_in_words(forum_thread.created_at) %></span> ago</p>
+        <p class="p-0 m-0 mr-3">Created by <%= forum_thread.user.name %>• <%= time_ago_in_words(forum_thread.created_at) %> ago</p>
         <div class="category-chip" style="color: <%= forum_thread.forum_category.color %>; border-color: <%= forum_thread.forum_category.color %>">
           <%= forum_thread.forum_category.name %>
         </div>
