@@ -2,7 +2,7 @@
   <%= gravatar_image_tag @forum_post.user.email, style: "float: left" %>
 
   <div style="margin-left:60px">
-    <p><strong><%= @forum_post.user.name %></strong> <small>commented:</small></p>
+    <p><strong><%= @forum_post.user.name %></strong> <small><%= t("commented:") %></small></p>
     <%= formatted_content @forum_post.body %>
   </div>
 </div>

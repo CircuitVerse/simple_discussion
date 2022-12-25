@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  forum_thread_error_explanation: "prohibited this forum_thread from being saved:"
+  ago: "ago"

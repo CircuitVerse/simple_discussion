@@ -5,7 +5,7 @@
 
   <% if @forum_post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@forum_post.errors.count, "error") %> prohibited this forum_post from being saved:</h2>
+      <h2><%= pluralize(@forum_post.errors.count, "error") %> <%= t("forum_thread_error_explanation") %></h2>
 
       <ul>
         <% @forum_post.errors.full_messages.each do |message| %>

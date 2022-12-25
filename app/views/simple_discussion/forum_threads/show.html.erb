@@ -6,7 +6,7 @@
 
 <div class="d-flex mb-4">
   <div class="thread-details-custom">
-    Created by <%= @forum_thread.user.name %> • <%= time_ago_in_words(@forum_thread.created_at) %> ago
+    <%= t("created_by") %> <%= @forum_thread.user.name %> • <%= time_ago_in_words(@forum_thread.created_at) %> <%= t("ago") %>
   </div>
   <div class="category-chip mx-3" style="color: <%= @forum_thread.forum_category.color %>; border-color: <%= @forum_thread.forum_category.color %>">
     <%= @forum_thread.forum_category.name %>
