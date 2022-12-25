@@ -44,3 +44,15 @@ en:
   check_out: Check out
   latest_questions: the latest questions
   instead: instead?
+  forum_thread_error_explanation: "prohibited this forum_thread from being saved:"
+  ago: "ago"
+  on: "on"
+  mark_as_solved: "Mark as solved"
+  undo: "Undo"
+  back_to_thread: "Back to thread"
+  created_by: "Created by"
+  solved: "Solved"
+  open: "Open"
+  create_account: "Create account"
+  login: "Log in"
+  commented: "commented:"

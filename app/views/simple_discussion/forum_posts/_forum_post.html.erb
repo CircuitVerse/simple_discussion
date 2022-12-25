@@ -22,7 +22,7 @@
         <p class="title"><%= forum_post.user.name %> <%= forum_user_badge(forum_post.user) %>
         <% if is_moderator_or_owner?(forum_post) %>(You)<% end %>
         </p>
-        <p class="subtitle"><%= t('on ') %>  <%= forum_post.created_at.strftime("%b %d, %Y") %></p>
+        <p class="subtitle"><%= t('on') %> &nbsp;<%= forum_post.created_at.strftime("%b %d, %Y") %></p>
       </div>
     </div>
   </div>
