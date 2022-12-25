@@ -17,12 +17,12 @@
           <% if forum_thread.solved? %>
             <div class="solved-tag">
               <%= icon "far", "check-circle" %>
-              Solved
+              <%= t('solved') %>
             </div>
           <% else %>
             <div class="unsolved-tag">
               <%= icon "far", "question-circle" %>
-              Open
+              <%= t('open') %>
             </div>
           <% end %>
         </div>
