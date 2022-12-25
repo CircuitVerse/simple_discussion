@@ -13,16 +13,16 @@
 
 // Primary button for Forum
 .simple_discussion .forum-primary-btn {
-  background-color: #42b983;
+  background-color: $brand-color;
   border-radius: 4px;
-  color: #fff;
+  color: $button-background-color;
   transition: all .3s ease 0s;
 
   &:hover {
     // border shadow with blur
     background-color: #026e57;
     box-shadow: 0 8px 15px #00000029;
-    color: #fff;
+    color: $button-background-color;
     transform: translateY(-7px);
   }
 }
