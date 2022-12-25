@@ -78,9 +78,9 @@ If you'd like to customize the color schemas , then you can follow these  steps
 - Create an scss file [simple_discussion_override_color.scss] and add the following code to it
 ```scss
 // Colors of the button is depend on this brand-color
-$brand-color: #4ddb9b; 
+$brand-color: #42b983; 
 // Color for icon and text of `Closed` / `solved` tag
-$thread-solved-color: #4ddb9b; 
+$thread-solved-color: #42b983; 
 // Color for icon and text of `Opened` / `Unsolved` tag
 $thread-unsolved-color: #f29d38; 
 // Button background color for primary buttons
