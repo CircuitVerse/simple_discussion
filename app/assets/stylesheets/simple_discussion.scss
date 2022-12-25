@@ -156,6 +156,21 @@
   }
 }
 
+.btn-secondary {
+  color: $button-background-color;
+  background-color: $secondary-button-color;
+  border-color: $secondary-button-color;
+  transition: transform .2s ease-in;
+
+  &:hover {
+    color: $button-background-color;
+    background-color: $secondary-button-color;
+    border-color: $secondary-button-color;
+    text-decoration: none;
+    transform: translateY(-4px);
+  }
+}
+
 // Formatting for the forum threads
 .simple_discussion .forum-thread {
   // Avatar of user
