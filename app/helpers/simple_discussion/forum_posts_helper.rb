@@ -6,7 +6,9 @@ module SimpleDiscussion::ForumPostsHelper
 
   # Override this method to provide your own content formatting like Markdown
   def formatted_content(text)
-    simple_format(text)
+    options = [:hard_wrap, :filter_html, :autolink, :tables]
+    Redcarpet.new(text, *options).to_html.html_safe
+     #simple_format(text)
   end
 
   def forum_post_classes(forum_post)

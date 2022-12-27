@@ -7,7 +7,7 @@ gemspec
 
 gem "appraisal"
 gem "standardrb"
-
+gem 'redcarpet', '1.17.2'
 gem "devise"
 gem "puma"
 gem "sqlite3"

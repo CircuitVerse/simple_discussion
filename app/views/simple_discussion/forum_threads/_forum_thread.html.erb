@@ -29,7 +29,7 @@
       </div>
 
       <div class="thread-content mb-2">
-        <%= truncate(forum_thread.forum_posts.first ? forum_thread.forum_posts.first.body : "No Posts", length: 400) %>
+        <%= formatted_content truncate(forum_thread.forum_posts.first ? forum_thread.forum_posts.first.body : "No Posts", length: 400) %>
       </div>
 
       <div class="thread-author d-flex flex-row  align-items-center">
