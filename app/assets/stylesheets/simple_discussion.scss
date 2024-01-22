@@ -130,6 +130,10 @@
     font-weight: 500;
     padding: 10px 12px;
     margin-bottom: 5px;
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+
 
     &:hover {
       background-color: $forum-thread-filter-btn-link-hover-background;
@@ -301,7 +305,7 @@
 .thread-page-container {
   border: 1px solid #80808029;
   padding: 15px;
-  max-width:76%
+  max-width:71%
 }
 
 .thread-menu-container{
