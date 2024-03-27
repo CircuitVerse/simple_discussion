@@ -1,4 +1,6 @@
 class ForumThread < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search_by_title, against: :title
   extend FriendlyId
   friendly_id :title, use: :slugged
 
