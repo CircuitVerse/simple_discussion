@@ -25,6 +25,49 @@ class ForumThread < ApplicationRecord
   scope :unpinned, -> { where.not(pinned: true) }
   scope :unsolved, -> { where.not(solved: true) }
 
+  if ActiveRecord::Base.connection.adapter_name.downcase.start_with?('postgresql')
+    include PgSearch::Model
+    pg_search_scope :basic_search,
+                    against: %i[title],
+                    using: {
+                      tsearch: {
+                        dictionary: 'english',
+                        tsvector_column: 'searchable_data'
+                      }
+                    }
+
+    after_save :generate_searchable
+
+    def generate_searchable
+      require 'redcarpet'
+      require 'redcarpet/render_strip'
+
+      markdown_renderer = Redcarpet::Render::StripDown.new
+      plain_body = Redcarpet::Markdown.new(markdown_renderer).render(forum_posts.first&.body.to_s)
+
+      searchable_content = "#{title} #{plain_body}"
+
+      tsvector_query = ActiveRecord::Base.send(:sanitize_sql_array,
+                                               ["SELECT to_tsvector('english', ?)", searchable_content])
+      self.searchable_data = ActiveRecord::Base.connection.execute(tsvector_query).getvalue(0, 0)
+      # Save the changes without triggering callbacks to avoid infinite loop
+      update_column(:searchable_data, self.searchable_data)
+    end
+  else
+    def self.basic_search(query)
+      joins(:forum_posts)
+        .where("forum_threads.title LIKE :query OR forum_posts.body LIKE :query", query: "%#{query}%")
+        .distinct
+    end
+  end
+
+  def update_searchable
+    if ActiveRecord::Base.connection.adapter_name.downcase.start_with?('postgresql')
+      generate_searchable
+      save
+    end
+  end
+
   def clean_title
     filters = [:profanity, :sex, :violence, :hate]
 

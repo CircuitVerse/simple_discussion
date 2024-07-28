@@ -60,6 +60,18 @@ class SimpleDiscussion::ForumThreadsController < SimpleDiscussion::ApplicationCo
     end
   end
 
+  def search
+    if params[:query].present?
+      @forum_threads = ForumThread.basic_search(params[:query])
+                                  .includes(:user, :forum_category)
+                                  .paginate(per_page: 10, page: page_number)
+    else
+      index
+      return
+    end
+    render :index
+  end
+
   private
 
   def set_forum_thread
@@ -68,5 +80,9 @@ class SimpleDiscussion::ForumThreadsController < SimpleDiscussion::ApplicationCo
 
   def forum_thread_params
     params.require(:forum_thread).permit(:title, :forum_category_id, forum_posts_attributes: [:body])
+  end
+
+  def page_number
+    params[:page] || 1
   end
 end
