@@ -1,0 +1,37 @@
+<div class="modal fade" id="reportSpamModal" tabindex="-1" role="dialog" aria-labelledby="reportSpamModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportSpamModalLabel">Report Post as Spam</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with id:"reportSpamForm", url: simple_discussion.forum_thread_path(forum_thread), method: :post, local: true  do |f| %>
+          <% if @spam_report && @spam_report.errors.any? %>
+            <div class="alert alert-danger" role="alert">
+              <% @spam_report.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= f.collection_radio_buttons :reason, SpamReport.reasons.keys, :to_s, :humanize, include_hidden: false do |b| %>
+              <div class="form-check">
+                <%= b.radio_button(class: "form-check-input") %>
+                <%= b.label(class: "form-check-label") %>
+              </div>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <%= f.label :details, "Reason in detail (if others)" %>
+            <%= f.text_area :details, class: "form-control", rows: 2 %>
+          </div>
+          <%= f.submit "Report", class: "btn btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

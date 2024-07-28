@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_160746) do
+ActiveRecord::Schema.define(version: 2024_07_28_092034) do
   create_table "forum_categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
@@ -48,14 +48,25 @@ ActiveRecord::Schema.define(version: 2021_03_31_160746) do
     t.datetime "updated_at"
   end
 
+  create_table "spam_reports", force: :cascade do |t|
+    t.integer "forum_post_id", null: false
+    t.integer "user_id", null: false
+    t.integer "reason", null: false
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forum_post_id"], name: "index_spam_reports_on_forum_post_id"
+    t.index ["user_id"], name: "index_spam_reports_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -67,4 +78,6 @@ ActiveRecord::Schema.define(version: 2021_03_31_160746) do
   add_foreign_key "forum_subscriptions", "users"
   add_foreign_key "forum_threads", "forum_categories"
   add_foreign_key "forum_threads", "users"
+  add_foreign_key "spam_reports", "forum_posts"
+  add_foreign_key "spam_reports", "users"
 end

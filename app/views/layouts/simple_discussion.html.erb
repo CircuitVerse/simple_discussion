@@ -41,6 +41,14 @@
               <%= t('.unanswered') %>
             </div>
           <% end %>
+          <% if is_moderator? %>
+            <%= forum_link_to simple_discussion.spam_reports_forum_threads_path do %>
+              <div class="btn-link">
+                <%= icon "fa-fw fa", "exclamation-triangle" %>
+                <%= t('.spam_posts') %>
+              </div>
+            <% end %>
+          <% end %>
         </div>
         <% if @forum_thread.present? && @forum_thread.persisted? %>
           <div class="mt-3">
@@ -67,3 +75,88 @@
 </div>
 
 <% parent_layout("application") %>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<script type="module">
+  import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+  window.Stimulus = Application.start()
+
+  Stimulus.register("dropdown", class extends Controller {
+    static targets = ["dropdownButton", "dropdownMenu"]
+
+    connect() {
+      this.dropdownButtonTarget.addEventListener("click", this.toggleDropdown.bind(this))
+      // if click somewhere else in the document, close the dropdown
+      window.addEventListener("click", (event) => {
+        if (!this.dropdownButtonTarget.contains(event.target)) {
+          this.dropdownMenuTarget.classList.remove("show")
+        }
+      })
+    }
+
+    // note that we are using bootstrap
+    toggleDropdown() {
+      this.dropdownMenuTarget.classList.toggle("show")
+    }
+  })
+
+
+  Stimulus.register("report-spam", class extends Controller {
+    static targets = ["reportSpamButton"]
+
+    connect() {
+      const reportSpamForm = document.getElementById("reportSpamForm")
+      const postId = this.element.dataset.postId
+      this.reportSpamButtonTarget.addEventListener("click", () => {
+        const formActionArray = reportSpamForm.action.split("/")
+        if (formActionArray[formActionArray.length - 2] === "threads") {
+          reportSpamForm.action += `/posts/${postId}/report_spam`
+        } else {
+          reportSpamForm.action = reportSpamForm.action.replace(/\/\d+\//, `/${postId}/`)
+        }
+      })
+    }
+  })
+
+  Stimulus.register("simplemde", class extends Controller {
+    static targets = ["textarea"]
+
+    connect() {
+      this.initializeEditor();
+
+      const previewButton = document.querySelector(".preview")
+      previewButton.style.width = "80px"
+      previewButton.style.height = "34px"
+    }
+
+    initializeEditor() {
+      this.editor = new SimpleMDE({
+        element: this.textareaTarget,
+        forceSync: true,
+        toolbar: [
+          "bold",
+          "italic",
+          "heading",
+          "|",
+          "quote",
+          "unordered-list",
+          "ordered-list",
+          "|",
+          "link",
+          {
+            name: "preview",
+            className: "preview no-disable",
+            action: function(editor) {
+              SimpleMDE.togglePreview(editor);
+            },
+            title: "Preview",
+          }
+        ],
+        spellChecker: false,
+      });
+    }
+  })
+</script>
+
