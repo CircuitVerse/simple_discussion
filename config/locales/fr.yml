@@ -58,3 +58,6 @@ fr:
   login: "Se connecter"
   commented: "a commenté:"
   inappropriate_language_error_message: "contient un langage inapproprié : %{words}"
+  unmark_as_solution: "Démarquer comme solution"
+  mark_as_solution: "Marquer comme solution"
+  report_post: "Signaler le post"

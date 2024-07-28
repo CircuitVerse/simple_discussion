@@ -248,7 +248,12 @@
   border: 1px solid #80808029;
 
   .card-body {
+    overflow-x: auto;
     margin-top: 16px;
+  }
+  .card-body iframe {
+    border-radius: $post-body-border-radius;
+    border: 2px solid #80808029;
   }
 }
 
@@ -295,4 +300,26 @@
 
 .thread-page-container {
   padding: 24px;
+}
+
+.preview::before {
+  content: "Preview";
+  width: 80px;
+}
+
+p {
+  font-size: 18px;
+}
+
+blockquote {
+  border-left: 5px solid #e9ecef;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.CodeMirror-line span {
+  font-size: 18px;
 }

@@ -6,6 +6,7 @@ PATH
       friendly_id (>= 5.2.0)
       language_filter (>= 0.3.01)
       rails (>= 4.2)
+      redcarpet (>= 3.3.4)
       will_paginate (>= 3.1.0)
 
 GEM
@@ -145,7 +146,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
-    nokogiri (1.16.6-x86_64-linux)
+    nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.25.1)
@@ -198,6 +199,7 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redcarpet (3.6.0)
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)

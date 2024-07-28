@@ -29,8 +29,22 @@ class SimpleDiscussion::ForumPostsController < SimpleDiscussion::ApplicationCont
   end
 
   def destroy
-    @forum_post.destroy!
-    redirect_to simple_discussion.forum_thread_path(@forum_thread)
+    # if @forum_post is first post of forum_thread then we need to destroy forum_thread
+    if @forum_thread.forum_posts.first == @forum_post
+      @forum_thread.destroy!
+      if params[:from] == "moderators_page"
+        redirect_to simple_discussion.spam_reports_forum_threads_path
+      else
+        redirect_to simple_discussion.root_path
+      end
+    else
+      @forum_post.destroy!
+      if params[:from] == "moderators_page"
+        redirect_to simple_discussion.spam_reports_forum_threads_path
+      else
+        redirect_to simple_discussion.forum_thread_path(@forum_thread)
+      end
+    end
   end
 
   def solved
@@ -50,6 +64,17 @@ class SimpleDiscussion::ForumPostsController < SimpleDiscussion::ApplicationCont
     @forum_thread.update_column(:solved, false)
 
     redirect_to simple_discussion.forum_thread_path(@forum_thread, anchor: ActionView::RecordIdentifier.dom_id(@forum_post))
+  end
+
+  def report_spam
+    @forum_post = @forum_thread.forum_posts.find(params[:id])
+    @spam_report = SpamReport.new(forum_post: @forum_post, user: current_user, reason: params[:reason], details: params[:details])
+
+    if @spam_report.save
+      redirect_to simple_discussion.forum_thread_path(@forum_thread, anchor: ActionView::RecordIdentifier.dom_id(@forum_post))
+    else
+      render template: "simple_discussion/forum_threads/show"
+    end
   end
 
   private

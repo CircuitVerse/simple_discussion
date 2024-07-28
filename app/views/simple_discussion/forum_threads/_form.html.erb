@@ -1,6 +1,14 @@
 <%= form_for @forum_thread,
    url: (@forum_thread.persisted? ? simple_discussion.forum_thread_path(@forum_thread) : simple_discussion.forum_threads_path),
-   html: { data: {behavior: "comment-form"} } do |f| %>
+   html: {
+     data: {
+       behavior: "comment-form", 
+       controller: "simplemde",
+       simplemde_circuit_embed_value: SimpleDiscussion.markdown_circuit_embed,
+       simplemde_user_tagging_value: SimpleDiscussion.markdown_user_tagging,
+       simplemde_video_embed_value: SimpleDiscussion.markdown_video_embed,
+     }
+   } do |f| %>
 
   <% if @forum_thread.errors.any? %>
     <div class="alert alert-danger" role="alert">
@@ -24,7 +32,7 @@
     <%= f.fields_for :forum_posts do |p| %>
       <div class="form-group">
         <%= p.label :body, t('what_help_needed') %>
-        <%= p.text_area :body, placeholder: t('add_a_comment'), rows: 10, class: "form-control simplemde", data: { behavior: "comment-body" } %>
+        <%= p.text_area :body, placeholder: t('add_a_comment'), rows: 10, class: "form-control simplemde", data: { behavior: "comment-body", simplemde_target: "textarea" } %>
       </div>
     <% end %>
   <% end %>
@@ -37,4 +45,57 @@
     <% end %>
   </div>
 
+  <!-- Empty div so that no error from stimulus controller-->
+  <div class="dropdown-menu" data-simplemde-target="tagDropdown">
+  </div>
 <% end %>
+
+<!-- Embed Circuit Modal -->
+<div class="modal fade" id="embedCircuitModal" tabindex="-1" aria-labelledby="embedCircuitModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="embedCircuitModalLabel">Embed Circuit</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="circuitEmbedLink" class="form-label">Circuit Embed Link:</label>
+            <input class="form-control" id="circuitEmbedLink" placeholder="Enter the circuit embed link">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn forum-primary-btn" id="insertCircuitEmbed">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Embed Video Modal -->
+<div class="modal fade" id="embedVideoModal" tabindex="-1" aria-labelledby="embedVideoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="embedVideoModalLabel">Embed YouTube Video</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="videoEmbedLink" class="form-label">YouTube Video Link:</label>
+            <input type="url" pattern="https://*" class="form-control" id="videoEmbedLink" placeholder="Enter the YouTube video link">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn forum-primary-btn" id="insertVideoEmbed">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>

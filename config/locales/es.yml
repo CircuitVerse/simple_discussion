@@ -56,3 +56,6 @@ es:
   login: "Iniciar sesión"
   commented: "comentó:"
   inappropriate_language_error_message: "contiene lenguaje inapropiado: %{words}"
+  unmark_as_solution: "Desmarcar como solución"
+  mark_as_solution: "Marcar como solución"
+  report_post: "Reportar publicación"
