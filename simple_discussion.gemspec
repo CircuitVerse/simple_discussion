@@ -27,5 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 4.2"
   spec.add_dependency "will_paginate", ">= 3.1.0"
   spec.add_dependency "language_filter", ">= 0.3.01"
+
   spec.metadata["rubygems_mfa_required"] = "true"
 end

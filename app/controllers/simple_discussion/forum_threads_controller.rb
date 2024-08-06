@@ -2,6 +2,7 @@ class SimpleDiscussion::ForumThreadsController < SimpleDiscussion::ApplicationCo
   before_action :authenticate_user!, only: [:mine, :participating, :new, :create]
   before_action :set_forum_thread, only: [:show, :edit, :update, :destroy]
   before_action :require_mod_or_author_for_thread!, only: [:edit, :update, :destroy]
+  before_action :require_mod!, only: [:spam_reports]
 
   def index
     @forum_threads = ForumThread.pinned_first.sorted.includes(:user, :forum_category).paginate(page: page_number)
@@ -25,6 +26,11 @@ class SimpleDiscussion::ForumThreadsController < SimpleDiscussion::ApplicationCo
   def participating
     @forum_threads = ForumThread.includes(:user, :forum_category).joins(:forum_posts).where(forum_posts: {user_id: current_user.id}).distinct(forum_posts: :id).sorted.paginate(page: page_number)
     render action: :index
+  end
+
+  def spam_reports
+    @spam_reports = SpamReport.includes(:forum_post).paginate(page: page_number)
+    render action: :spam_reports
   end
 
   def show

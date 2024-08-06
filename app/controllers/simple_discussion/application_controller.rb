@@ -34,6 +34,12 @@ class SimpleDiscussion::ApplicationController < ::ApplicationController
     end
   end
 
+  def require_mod!
+    unless is_moderator?
+      redirect_to_root
+    end
+  end
+
   private
 
   def redirect_to_root
