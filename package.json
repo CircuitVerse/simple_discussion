@@ -1,0 +1,17 @@
+{
+  "name": "simple_discussion",
+  "version": "1.0.0",
+  "description": "javascript asset precompiling for this gem",
+  "author": "CircuitVerse",
+  "license": "MIT",
+  "homepage": "https://github.com/circuitverse/simple_discussion#readme",
+  "scripts": {
+    "build": "esbuild app/assets/javascripts/simple_discussion/application.js --bundle --sourcemap --outdir=app/assets/builds/simple_discussion --public-path=/assets/simple_discussion"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "bootstrap": "^5.3.3",
+    "esbuild": "^0.20.2",
+    "marked": "^13.0.2"
+  }
+}

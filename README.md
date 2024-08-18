@@ -132,6 +132,10 @@ By default, SimpleDiscussion will attempt to send email and slack notifications 
 SimpleDiscussion.setup do |config|
   config.send_email_notifications = false # Default: true
   config.send_slack_notifications = false # Default: true
+
+  config.markdown_circuit_embed = false # Default: false
+  config.markdown_user_tagging = false # Default: false 
+  config.markdown_video_embed = false # Default false
 end
 ```
 

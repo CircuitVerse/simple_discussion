@@ -5,3 +5,8 @@ one:
 two:
   name: "Second User"
   email: "second@example.com"
+
+moderator:
+  name: "Moderator"
+  email: "moderator@moderator.com"
+  moderator: true

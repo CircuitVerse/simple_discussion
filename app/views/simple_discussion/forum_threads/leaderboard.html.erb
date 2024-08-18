@@ -1,0 +1,20 @@
+<h2 class="h2 ml-3 mb-4">Leaderboard</h2>
+<div class="container-fluid px-3">
+  <div class="row mx-n2">
+    <% @ranked_users.each_with_index do |leaderboard_user, index| %>
+      <div class="col-12 col-lg-6 px-2 mb-3">
+        <a class="btn btn-light border p-3 position-relative d-flex flex-row align-items-center w-100 h-100" target="_blank" href="<%= user_path(leaderboard_user.user) %>">
+          <span class="position-absolute" style="color: #aaa; top: -5px; right: 10px; font-size: 40px;"><%= index + 1 %></span>
+          <%= image_tag user_profile_picture(leaderboard_user.user.profile_picture), alt: leaderboard_user.user.name, class: "user-avatar mr-3", style: "width: 60px; height: 60px; object-fit: cover;" %>
+          <div class="text-left">
+            <p class="h4 font-weight-bold mb-1"><%= leaderboard_user.user.name %></p>
+            <p class="h5 mb-0"><%= leaderboard_user.points %> Points</p>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-4">
+  <%= will_paginate @ranked_users, url_builder: simple_discussion, renderer: SimpleDiscussion::BootstrapLinkRenderer %>
+</div>

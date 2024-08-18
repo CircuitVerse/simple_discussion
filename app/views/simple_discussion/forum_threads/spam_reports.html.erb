@@ -1,0 +1,16 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-md-6" scope="col">Forum Post</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Reported by</th>
+        <th scope="col">View in Thread</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "simple_discussion/forum_posts/spam_report", collection: @spam_reports%>
+    </tbody>
+  </table>
+
+  <%= will_paginate @spam_reports, url_builder: simple_discussion, renderer: SimpleDiscussion::BootstrapLinkRenderer %>

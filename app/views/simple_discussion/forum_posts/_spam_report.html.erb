@@ -1,0 +1,57 @@
+<%= content_tag :tr, id: dom_id(spam_report), class: "forum-post" do %>
+  <td>
+    <div class="border rounded-lg">
+      <div class="forum-post-header">
+        <div class="user-details d-flex flex-row">
+          <div class="user-avatar mr-2" ><img src="<%= gravatar_url_for(spam_report.forum_post.user.email, size: 30) %>" alt="avatar of user" ></div>
+          <div class="details d-flex flex-column justify-content-between">
+            <p class="title">
+              <%= spam_report.forum_post.user.name %> <%= forum_user_badge(spam_report.forum_post.user) %>
+            </p>
+            <p class="subtitle"><%= t('on') %> &nbsp;<%= spam_report.forum_post.created_at.strftime("%b %d, %Y") %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body p-3">
+        <%= formatted_content spam_report.forum_post.body %>
+      </div>
+    </div>
+  </td>
+
+  <td>
+    <div class="d-flex flex-row justify-content-between align-items-center p-2">
+      <% if spam_report.reason == "others" %>
+        <%= spam_report.details %>
+      <% else %>
+        <%= spam_report.reason.humanize %>
+      <% end %>
+    </div>
+  </td>
+
+  <td>
+    <div class="d-flex flex-row justify-content-between align-items-center p-2">
+      <%= link_to spam_report.user.name, user_profile_link(spam_report.user), class: "btn btn-outline-primary", title: t('user_profile') %>
+    </div>
+  </td>
+  <td>
+    <div class="d-flex flex-row justify-content-between align-items-center p-2">
+      <%= link_to simple_discussion.forum_thread_path(spam_report.forum_post.forum_thread, anchor: "forum_post_#{spam_report.forum_post.id}"),
+        class: "btn btn-dark",
+        data: { toggle: "tooltip", placement: "left" } do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+      <% end %>
+    </div>
+  </td>
+  <td>
+    <div class="d-flex flex-row justify-content-between align-items-center p-2">
+      <%= link_to simple_discussion.forum_thread_forum_post_path(spam_report.forum_post.forum_thread, spam_report.forum_post, from: "moderators_page"),
+        method: :delete, 
+        data: { toggle: "tooltip", placement: "left", confirm: "Are you sure you want to delete this post?" },
+        title: t('delete_this_post'),
+        class: "btn btn-danger" do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+    </div>
+  </td>
+<% end %>

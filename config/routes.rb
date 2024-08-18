@@ -6,6 +6,8 @@ SimpleDiscussion::Engine.routes.draw do
         get :unanswered
         get :mine
         get :participating
+        get :spam_reports
+        get :leaderboard
         get "category/:id", to: "forum_categories#index", as: :forum_category
       end
 
@@ -13,6 +15,7 @@ SimpleDiscussion::Engine.routes.draw do
         member do
           put :solved
           put :unsolved
+          post :report_spam
         end
       end
 
