@@ -1,6 +1,6 @@
 <%= form_for @forum_thread,
    url: (@forum_thread.persisted? ? simple_discussion.forum_thread_path(@forum_thread) : simple_discussion.forum_threads_path),
-   html: { data: {behavior: "comment-form"} } do |f| %>
+   html: { data: { behavior: "comment-form", controller: "simplemde" } } do |f| %>
 
   <% if @forum_thread.errors.any? %>
     <div class="alert alert-danger" role="alert">
@@ -24,7 +24,7 @@
     <%= f.fields_for :forum_posts do |p| %>
       <div class="form-group">
         <%= p.label :body, t('what_help_needed') %>
-        <%= p.text_area :body, placeholder: t('add_a_comment'), rows: 10, class: "form-control simplemde", data: { behavior: "comment-body" } %>
+        <%= p.text_area :body, placeholder: t('add_a_comment'), rows: 10, class: "form-control simplemde", data: { behavior: "comment-body", simplemde_target: "textarea" } %>
       </div>
     <% end %>
   <% end %>

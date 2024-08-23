@@ -27,11 +27,6 @@
           <% end %>
         </div>
       </div>
-
-      <div class="thread-content mb-2">
-        <%= truncate(forum_thread.forum_posts.first ? forum_thread.forum_posts.first.body : "No Posts", length: 400) %>
-      </div>
-
       <div class="thread-author d-flex flex-row  align-items-center">
         <p class="p-0 m-0 mr-3"> <%= t("created_by") %> <%= forum_thread.user.name %>• <%= time_ago_in_words(forum_thread.created_at) %> <%= t("ago") %></p>
         <div class="category-chip" style="color: <%= forum_thread.forum_category.color %>; border-color: <%= forum_thread.forum_category.color %>">
