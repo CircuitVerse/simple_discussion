@@ -1,160 +1,198 @@
-# SimpleDiscussion - Forum engine for Ruby on Rails
+# SimpleDiscussion: A Powerful Forum Engine for Ruby on Rails
 
-[![Build Status](https://github.com/excid3/simple_discussion/workflows/Tests/badge.svg)](https://github.com/excid3/simple_discussion/actions) [![Gem Version](https://badge.fury.io/rb/simple_discussion.svg)](https://badge.fury.io/rb/simple_discussion)
+[![Build Status](https://github.com/circuitverse/simple_discussion/workflows/Tests/badge.svg)](https://github.com/circuitverse/simple_discussion/actions) [![Gem Version](https://badge.fury.io/rb/simple_discussion.svg)](https://badge.fury.io/rb/simple_discussion)
 
-SimpleDiscussion is a Rails forum gem extracting the [GoRails forum](https://gorails.com/forum). It includes categories, simple moderation, the ability to mark threads as solved, and more.
+SimpleDiscussion is a comprehensive Rails forum gem, inspired by the [GoRails forum](https://gorails.com/forum). It's currently in production use by CircuitVerse, which you can see in action [here](https://circuitverse.org/forum).
 
-Out of the box, SimpleDiscussion comes with styling for Bootstrap v4 but you're free to customize the UI as much as you like by installing the views and tweaking the HTML.
+![GoRails Forum Screenshot](https://d3vv6lp55qjaqc.cloudfront.net/items/3j2p3o1j0d1O0R1w2j1Y/Screen%20Shot%202017-08-08%20at%203.12.01%20PM.png?X-CloudApp-Visitor-Id=51470&v=d439dcae)
 
-[![GoRails Forum](https://d3vv6lp55qjaqc.cloudfront.net/items/3j2p3o1j0d1O0R1w2j1Y/Screen%20Shot%202017-08-08%20at%203.12.01%20PM.png?X-CloudApp-Visitor-Id=51470&v=d439dcae)](https://d3vv6lp55qjaqc.cloudfront.net/items/3j2p3o1j0d1O0R1w2j1Y/Screen%20Shot%202017-08-08%20at%203.12.01%20PM.png?X-CloudApp-Visitor-Id=51470&v=d439dcae)
+## Table of Contents
+
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Configuration](#configuration)
+4. [Usage](#usage)
+5. [Customization](#customization)
+   - [Styling](#styling)
+   - [Views and Controllers](#views-and-controllers)
+6. [Advanced Features](#advanced-features)
+   - [Markdown Editor](#markdown-editor)
+   - [Profanity Check and Language Filter](#profanity-check-and-language-filter)
+   - [Topic Search](#topic-search)
+   - [Notifications](#notifications)
+7. [Development](#development)
+8. [Contributing](#contributing)
+9. [License](#license)
+10. [Code of Conduct](#code-of-conduct)
+
+## Features
+
+SimpleDiscussion offers a rich set of features to create a fully-functional forum:
+
+- **Markdown Editor**: GitHub-like editor for posts and threads
+- **Category Organization**: Easily categorize discussions
+- **Moderation System**: Simple yet effective moderation tools
+- **Spam Reporting**: Allow users to report spam
+- **Thread Solving**: Mark threads as solved
+- **Topic Search**: Built-in search functionality (can be overridable)
+- **Notifications**: Email and Slack notifications
+- **Customizable Styling**: Bootstrap v4 compatible out-of-the-box
 
 ## Installation
 
-Before you get started, SimpleDiscussion requires a `User` model in your application (for now).
+1. Add SimpleDiscussion to your Gemfile:
 
-Add this line to your application's Gemfile:
+   ```ruby
+   gem 'simple_discussion', github: "CircuitVerse/simple_discussion"
+   ```
 
-```ruby
-gem 'simple_discussion'
-```
+2. Install the gem:
 
-And then execute:
+   ```bash
+   bundle install
+   ```
 
-```bash
-bundle
-```
+3. Install and run migrations:
 
-Install the migrations and migrate:
+   ```bash
+   rails simple_discussion:install:migrations
+   rails db:migrate
+   ```
 
-```bash
-rails simple_discussion:install:migrations
-rails db:migrate
-```
+4. Mount the engine in `config/routes.rb`:
 
-Add SimpleDiscussion to your `User` model. The model **must** have `name` method which will be used to display the user's name on the forum. Currently only a model named `User` will work, but this will be fixed shortly.
+   ```ruby
+   mount SimpleDiscussion::Engine => "/forum"
+   ```
 
-```ruby
-class User < ActiveRecord::Base
-  include SimpleDiscussion::ForumUser
+5. Add the CSS to your `application.css`:
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-end
-```
+   ```scss
+   *= require simple_discussion
+   ```
 
-Optionally, you can add a `moderator` flag to the `User` model to allow users to edit threads and posts they didn't write.
+## Configuration
 
-```bash
-rails g migration AddModeratorToUsers moderator:boolean
-rails db:migrate
-```
+1. Include SimpleDiscussion in your `User` model:
 
-Add the following line to your `config/routes.rb` file:
+   ```ruby
+   class User < ApplicationRecord
+     include SimpleDiscussion::ForumUser
 
-```ruby
-mount SimpleDiscussion::Engine => "/forum"
-```
+     def name
+       "#{first_name} #{last_name}"
+     end
+   end
+   ```
 
-Lastly, add the CSS to your `application.css` to load some default styles.
+2. (Optional) Add a moderator flag to your `User` model:
 
-```scss
-*= require simple_discussion
-```
+   ```bash
+   rails g migration AddModeratorToUsers moderator:boolean
+   rails db:migrate
+   ```
+
+3. (Optional) Create an initializer file `config/initializers/simple_discussion.rb`:
+
+   ```ruby
+   SimpleDiscussion.setup do |config|
+     config.profanity_filter = true # Default: true
+     config.markdown_circuit_embed = false # Default: true
+     config.markdown_user_tagging = false # Default: true
+     config.markdown_video_embed = false # Default: true
+     config.send_email_notifications = true # Default: true
+     config.send_slack_notifications = false # Default: true
+   end
+   ```
 
 ## Usage
 
-To get all the basic functionality, the only thing you need to do is add a link to SimpleDiscussion in your navbar.
+Add a link to the forum in your application's navbar:
 
 ```erb
 <%= link_to "Forum", simple_discussion_path %>
 ```
 
-This will take the user to the views inside the Rails engine and that's all you have to do!
+## Customization
 
-### Customizing All The Things!
+### Styling
 
-If you'd like to customize the color schemas , then you can follow these  steps
-- Create an scss file [simple_discussion_override_color.scss] and add the following code to it
+To customize colors, create `simple_discussion_override_color.scss`:
+
 ```scss
-// Colors of the button is depend on this brand-color
-$brand-color: #42b983; 
-// Color for icon and text of `Closed` / `solved` tag
-$thread-solved-color: #42b983; 
-// Color for icon and text of `Opened` / `Unsolved` tag
-$thread-unsolved-color: #f29d38; 
-// Button background color for primary buttons
+$brand-color: #42b983;
+$thread-solved-color: #42b983;
+$thread-unsolved-color: #f29d38;
 $button-background-color: #fff;
-// Shadown color when hovering over the buttons
-$button-hover-shadow-color: rgba(77, 219, 155, .5); 
-// active links color
+$button-hover-shadow-color: rgba(77, 219, 155, .5);
 $link-active-color: #000;
-// inactive links color
 $link-inactive-color: #555;
-// Color for thread filter buttons on hover
 $forum-thread-filter-btn-link-hover-background: #f3f4f6;
 ```
-- Add the scss file to application.scss.
-  > Note : Make sure that the file is imported before the simple_discussion.scss file
-```scss
-...
-@import 'simple_discussion_override_color.scss';
-@import 'simple_discussion';
-...
-```
-- Now, you can customize the colors, as per your need
 
-If you'd like to customize the views that SimpleDiscussion uses, you can install the views to your Rails app:
+Import this file before `simple_discussion` in your `application.scss`:
+
+```scss
+@import 'simple_discussion_override_color';
+@import 'simple_discussion';
+```
+
+### Views and Controllers
+
+To customize views or controllers:
 
 ```bash
 rails g simple_discussion:views
-```
-
-You can also install a copy of the SimpleDiscussion controllers for advanced customization:
-
-```bash
 rails g simple_discussion:controllers
-```
-
-Helpers are available for override as well. They are used for rendering the user avatars, text formatting, and more.
-
-```bash
 rails g simple_discussion:helpers
 ```
 
-**NOTE:** Keep in mind that the more customization you do, the tougher gem upgrades will be in the future.
+## Advanced Features
 
-### Email And Slack Notifications
+### Markdown Editor
 
-By default, SimpleDiscussion will attempt to send email and slack notifications for users subscribed to threads. To turn these off you can do the following in `config/initializers/simple_discussion.rb`
+The Markdown Editor for drafting forum posts and threads is enabled by default. It includes extensions for embedding CircuitVerse Circuits, YouTube videos, and user tagging. These features can be toggled in the initializer.
+
+### Profanity Check and Language Filter
+
+Profanity checking and language filtering on forum posts are enabled by default. You can disable this feature in the initializer file.
+
+### Topic Search
+
+A basic implementation for searching across forum threads is included. You can enhance this by overriding the `ForumThread` model in your Rails application:
 
 ```ruby
-SimpleDiscussion.setup do |config|
-  config.send_email_notifications = false # Default: true
-  config.send_slack_notifications = false # Default: true
-
-  config.markdown_circuit_embed = false # Default: false
-  config.markdown_user_tagging = false # Default: false 
-  config.markdown_video_embed = false # Default false
+class ForumThread < ApplicationRecord
+  def self.search(query)
+    ForumThread.joins(:forum_posts)
+               .where("forum_threads.title LIKE :query OR forum_posts.body LIKE :query", query: "%#{query}%")
+               .distinct
+  end
 end
 ```
 
-Slack notifications require you to set `simple_discussion_slack_url` in your `config/secrets.yml`. If you don't have this value set, it will not attempt Slack notifications even if they are enabled.
+For more advanced search capabilities, you can integrate with ElasticSearch, MilliSearch, or Postgres's FTS.
+
+### Notifications
+
+Email and Slack notifications can be configured in the initializer. For Slack notifications, set `simple_discussion_slack_url` in `config/secrets.yml`.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+To set up the development environment:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+1. Check out the repo
+2. Run `bin/setup` to install dependencies
+3. Run `rake test` to run the tests
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/excid3/simple_discussion. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+We welcome bug reports and pull requests on GitHub at https://github.com/excid3/simple_discussion. Please adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+This gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
-Everyone interacting in the SimpleDiscussion project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/excid3/simple_discussion/blob/master/CODE_OF_CONDUCT.md).
+All contributors are expected to follow our [code of conduct](https://github.com/excid3/simple_discussion/blob/master/CODE_OF_CONDUCT.md).
