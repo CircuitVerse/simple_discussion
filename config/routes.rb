@@ -7,6 +7,7 @@ SimpleDiscussion::Engine.routes.draw do
         get :mine
         get :participating
         get :spam_reports
+        get :search
         get "category/:id", to: "forum_categories#index", as: :forum_category
       end
 

@@ -1,4 +1,5 @@
 require "language_filter"
+
 class ForumPost < ApplicationRecord
   belongs_to :forum_thread, counter_cache: true, touch: true
   belongs_to :user
@@ -24,6 +25,8 @@ class ForumPost < ApplicationRecord
       errors.add(:body, I18n.t(".inappropriate_language_error_message", words: detected_words.to_a.join(", ")))
     end
   end
+
+  private
 
   def solve_forum_thread
     forum_thread.update(solved: true)
