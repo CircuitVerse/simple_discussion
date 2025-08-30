@@ -31,7 +31,7 @@
 
   <td>
     <div class="d-flex flex-row justify-content-between align-items-center p-2">
-      <%= link_to spam_report.user.name, user_path(spam_report.user), class: "btn btn-outline-primary", title: t('user_profile') %>
+      <%= link_to spam_report.user.name, user_profile_link(spam_report.user), class: "btn btn-outline-primary", title: t('user_profile') %>
     </div>
   </td>
   <td>
