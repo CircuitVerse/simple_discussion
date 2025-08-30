@@ -59,3 +59,5 @@ es:
   unmark_as_solution: "Desmarcar como solución"
   mark_as_solution: "Marcar como solución"
   report_post: "Reportar publicación"
+  topic_search_input_placeholder: "Buscar hilos de foros"
+  search: "Buscar"

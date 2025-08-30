@@ -40,6 +40,13 @@ class ForumThread < ApplicationRecord
     end
   end
 
+  # simple search implementation on all forum threads
+  def self.search(query)
+    joins(:forum_posts)
+      .where("LOWER(forum_threads.title) LIKE :query OR LOWER(forum_posts.body) LIKE :query", query: "%#{query.downcase}%")
+      .distinct
+  end
+
   def subscribed_users
     (users + optin_subscribers).uniq - optout_subscribers
   end
