@@ -76,6 +76,9 @@
 
 <% parent_layout("application") %>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <script type="module">
   import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
   window.Stimulus = Application.start()
@@ -99,7 +102,6 @@
     }
   })
 
-
   Stimulus.register("report-post", class extends Controller {
     static targets = ["reportPostButton"]
 
@@ -117,4 +119,44 @@
       })
     }
   })
+
+  Stimulus.register("simplemde", class extends Controller {
+    static targets = ["textarea"]
+
+    connect() {
+      this.initializeEditor();
+
+      const previewButton = document.querySelector(".preview")
+      previewButton.style.width = "80px"
+      previewButton.style.height = "34px"
+    }
+
+    initializeEditor() {
+      this.editor = new SimpleMDE({
+        element: this.textareaTarget,
+        forceSync: true,
+        toolbar: [
+          "bold",
+          "italic",
+          "heading",
+          "|",
+          "quote",
+          "unordered-list",
+          "ordered-list",
+          "|",
+          "link",
+          {
+            name: "preview",
+            className: "preview no-disable",
+            action: function(editor) {
+              SimpleMDE.togglePreview(editor);
+            },
+            title: "Preview",
+          }
+        ],
+        spellChecker: false,
+      });
+    }
+  })
 </script>
+
