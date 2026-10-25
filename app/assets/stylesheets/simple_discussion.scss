@@ -209,6 +209,10 @@
     color: $link-inactive-color;
     font-weight: 400;
     font-size: 14px;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 
   // Thread Author Details line
